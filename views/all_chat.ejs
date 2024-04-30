@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <title>All User</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center m-3 text-warning">Private Chat </h1>
+        <div class="row mt-5 ">
+            <div class="col-sm-4 border ">
+                <% data.forEach(value => {%>
+                <div class="row">                    
+                        <div class="col-sm-6">
+                            <a class="text text-decoration-none text-dark" href="">
+                                <img height="70px" class="rounded-circle " width="60px" src="/register/<%= value.filename %>" alt="">
+                            <p><%= value.name %></p>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 mt-3">
+                            <button class="btn btn-primary">
+                                <a href=" /show_data/<%=value._id %>" class="text-decoration-none text-light">Message</a>
+                            </button>
+                        </div>
+                </div>
+                <% }) %>
+            </div>
+            <div class="col-sm-8 border border-4">
+                <div class="col-sm-12 text-center "></div>
+                <div class="col-sm-12" id="chat">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Product</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center text-primary m-3">All Product</h1>
+        <button class="btn btn-dark m-2"><a href="/add_product" class="text-light text-decoration-none">Add Product</a></button>
+        <div class="row">
+            
+            <div 
+                class="table-responsive"
+            >
+                <table
+                    class="table table-primary"
+                >
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Picture</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Detail</th>
+                            <th scope="col">Buy Now</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% data.forEach(value =>  { %>
+                        <tr class="">
+                            <td><%= value._id %></td>
+                            <td><%= value.name %></td>
+                            <td><img height="50px" width="50px" src="/product/<%= value.filename %>" alt=""></td>
+                            <td><%= value.price %></td>
+                            <td><%= value.detail %></td>
+                            <td><button class="btn btn-danger">
+                                <a class="text-light text-decoration-none" href="/buy_now/<%= value._id %>">Buy Now</a></button></td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>

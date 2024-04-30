@@ -1,0 +1,81 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Private Chat</title>
+  <style>
+    #messages {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    #messages li {
+      margin-bottom: 10px;
+    }
+
+    .incoming {
+      color: red;
+      text-align: left;
+    }
+
+    .outgoing {
+      color: blue;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <ul id="messages"></ul>
+  <form id="form" action="">
+    <input id="to" placeholder="To username" autocomplete="off" />
+    <input id="m" placeholder="Type your message" autocomplete="off" />
+    <button>Send</button>
+  </form>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const socket = io();
+
+      // Register and authenticate the user
+      const username = prompt('Enter your username:');
+      const password = prompt('Enter your password:');
+      socket.emit('register', { username, password });
+      socket.emit('authenticate', { username, password });
+
+      // Listen for private messages
+      socket.on('private message', (msg) => {
+        const messages = document.getElementById('messages');
+        const item = document.createElement('li');
+        item.textContent = `${msg.from}: ${msg.message}`;
+        item.className = 'incoming';
+        messages.appendChild(item);
+      });
+
+      // Handle form submission
+      document.getElementById('form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const to = document.getElementById('to').value;
+        const message = document.getElementById('m').value;
+
+        // Send private message to the server
+        socket.emit('private message', { to, message });
+
+        // Display outgoing message on the client
+        const messages = document.getElementById('messages');
+        const item = document.createElement('li');
+        item.textContent = `You to ${to}: ${message}`;
+        item.className = 'outgoing';
+        messages.appendChild(item);
+
+        document.getElementById('to').value = '';
+        document.getElementById('m').value = '';
+        return false;
+      });
+    });
+  </script>
+</body>
+</html>
